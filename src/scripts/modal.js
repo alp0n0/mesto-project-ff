@@ -1,27 +1,30 @@
 // Функция открытия модального окна (+ закрытие на ESC, и Overlay)
 export function openModal(element) {
     element.classList.add('popup_is-opened', 'popup_is-animated');    
-    document.addEventListener('keydown', (evt) => escapeModal(evt, element));
-    element.addEventListener('click', (evt) => clickOverlay(evt, element));    
+    document.addEventListener('keydown', escapeModal);
+    element.addEventListener('click', clickOverlay);    
 }
 
 // Функция закрытия модального окна
 export function closeModal(element) {
     element.classList.remove('popup_is-opened');
-    
+    document.removeEventListener('keydown', escapeModal); 
+    element.removeEventListener('keydown', clickOverlay); 
 }
 
 // Функция закрытия по ESC
-function escapeModal(evt, element) {
+function escapeModal(evt) {
     if (evt.key === 'Escape') {
-        closeModal(element);   
-        document.removeEventListener('keydown', escapeModal);     
+      const openedPopupESC = document.querySelector('.popup_is-opened');
+      closeModal(openedPopupESC);   
     }   
 }
 
 // Функция закрытия по Overlay
-function clickOverlay(evt, element) {
+function clickOverlay(evt) {
   if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains('popup__close')) {
-    closeModal(element);    
+    const openedPopupOverlay = document.querySelector('.popup_is-opened');
+    closeModal(openedPopupOverlay);    
   }
 }
+

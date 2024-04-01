@@ -6,25 +6,41 @@ import { createCard, deleteCard, likeButton } from './scripts/card.js';
 import { openModal, closeModal } from './scripts/modal.js';
 
 // @todo: Глобальные константы
+
+// Находим место вывода карточек
 const placesList = document.querySelector('.places__list');
-const editButton = document.querySelector('.profile__edit-button');
+
+// Находим попапы
 const popupTypeEdit = document.querySelector('.popup_type_edit');
-const closePopup = popupTypeEdit.querySelector('.popup__close');
-const addButton = document.querySelector('.profile__add-button');
 const popupTypeNewCard = document.querySelector('.popup_type_new-card');
-const closePopupCard = popupTypeNewCard.querySelector('.popup__close');
 const popupTypeImage = document.querySelector('.popup_type_image');
 
-// Находим форму в DOM
+// Находим кнопки открытия попапов
+const editButton = document.querySelector('.profile__edit-button');
+const addButton = document.querySelector('.profile__add-button');
+
+// Находим формы
 const formElement = document.querySelector('.popup__form');
 
-// Находим поля формы в DOM
+// Находим поля формы личных данных
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_description');
 
-// Поля Input создания новой карточки
+// Находим input формы личных данных
 const elName = document.querySelector('.profile__title');
 const elJob = document.querySelector('.profile__description');
+
+// Находим поля формы создания новой карточки
+const popupImage = popupTypeImage.querySelector('.popup__image');
+const popupCaption = popupTypeImage.querySelector('.popup__caption');
+
+// Находим поля input создания новой карточки
+const cardName = document.querySelector('.popup__input_type_card-name');
+const url = document.querySelector('.popup__input_type_url');
+
+// находим все крестики проекта по универсальному селектору
+const closeButtons = document.querySelectorAll('.popup__close');
+
 
 // Функция редактирования личных данных
 function handleFormSubmit(evt) {
@@ -41,13 +57,11 @@ function addInput() {
 }
 
 // Слушатель на кнопку сохранения редактирования личных данных
-document.forms[0].addEventListener('submit', handleFormSubmit); 
+document.forms['edit-profile'].addEventListener('submit', handleFormSubmit); 
 
 // Функция создания новой карточки
 function newCard(evt) {
     evt.preventDefault();    
-    const cardName = document.querySelector('.popup__input_type_card-name');
-    const url = document.querySelector('.popup__input_type_url');
     const objCard = { name: cardName.value, link: url.value };
     return addNewCard(createCard(objCard, deleteCard, openImage, likeButton));
 }
@@ -55,16 +69,14 @@ function newCard(evt) {
 function addNewCard(element) {
     placesList.prepend(element);
     closeModal(popupTypeNewCard);        
-    document.forms[1].reset(); 
+    document.forms['new-place'].reset(); 
 }
 
 // Слушатель на кнопку сохранения новой карточки
-document.forms[1].addEventListener('submit', newCard);
+document.forms['new-place'].addEventListener('submit', newCard);
 
 // Открыть модальное окно кликом на картинку
 function openImage(element) {
-    const popupImage = popupTypeImage.querySelector('.popup__image');
-    const popupCaption = popupTypeImage.querySelector('.popup__caption');
     popupImage.src = element.link;
     popupImage.alt = element.name;
     popupCaption.textContent = element.name;
@@ -81,18 +93,11 @@ addButton.addEventListener('click', () => {
     openModal(popupTypeNewCard);
 });
 
-// Слушатель закрытия модального окна редактирования личных данных
-closePopup.addEventListener('click', () => {
-    closeModal(popupTypeEdit);
+// Слушатель закрытия всех модальных окон на крестик
+closeButtons.forEach((button) => {
+    button.closest('.popup');
+    button.addEventListener('click', () => closeModal);
 });
-
-// Слушатель закрытия модального окна добавление новой карточки
-closePopupCard.addEventListener('click', () => {
-    closeModal(popupTypeNewCard);
-});
-
-// Слушатель Лайка
-placesList.addEventListener('click', likeButton);
 
 // @todo: Вывод карточек на страницу
 initialCards.forEach((cardItem) => {
