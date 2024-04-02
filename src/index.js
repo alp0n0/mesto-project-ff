@@ -2,7 +2,7 @@ import './pages/index.css'; // добавьте импорт главного ф
 
 // @todo: Импорт
 import { initialCards } from './scripts/cards.js';
-import { clicklikeButton, createCard, deleteCard, likeButton } from './scripts/card.js';
+import { createCard, deleteCard, clickLikeButton } from './scripts/card.js';
 import { openModal, closeModal } from './scripts/modal.js';
 
 // @todo: Глобальные константы
@@ -63,7 +63,7 @@ document.forms['edit-profile'].addEventListener('submit', handleFormSubmit);
 function createNewCard(evt) {
     evt.preventDefault();    
     const objCard = { name: cardName.value, link: url.value };
-    return addNewCard(createCard(objCard, deleteCard, openImage, clicklikeButton));
+    return addNewCard(createCard(objCard, deleteCard, openImage, clickLikeButton));
 }
 // Функция добавления новой карточки
 function addNewCard(element) {
@@ -101,6 +101,6 @@ closeButtons.forEach((button) => {
 
 // @todo: Вывод карточек на страницу
 initialCards.forEach((cardItem) => {
-    placesList.append(createCard(cardItem, deleteCard, openImage, clicklikeButton));
+    placesList.append(createCard(cardItem, deleteCard, openImage, clickLikeButton));
   })
 

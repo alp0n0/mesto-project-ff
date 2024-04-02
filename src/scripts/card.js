@@ -1,5 +1,5 @@
 // @todo: Функция создания карточки
-export function createCard( element, deleteCard, openImage, likeButton ) {
+export function createCard( element, deleteCard, openImage, clickLikeButton ) {
     const cardTemplate = document.querySelector('#card-template').content;
     const cardItem = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -14,7 +14,7 @@ export function createCard( element, deleteCard, openImage, likeButton ) {
     cardImages.addEventListener('click', () => openImage(element));
 
     // Слушатель Лайка
-    cardItem.addEventListener('click', clicklikeButton);
+    cardItem.addEventListener('click', clickLikeButton);
 
     return cardItem;    
 }
@@ -26,7 +26,7 @@ export const deleteCard = (evt) => {
 }
 
   // @todo: Функция лайка
- export function clicklikeButton(evt) {
+ export function clickLikeButton(evt) {
     if (evt.target.classList.contains('card__like-button')) {
       evt.target.classList.toggle('card__like-button_is-active');
     }
