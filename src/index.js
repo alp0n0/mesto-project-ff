@@ -2,7 +2,7 @@ import './pages/index.css'; // добавьте импорт главного ф
 
 // @todo: Импорт
 import { initialCards } from './scripts/cards.js';
-import { createCard, deleteCard, likeButton } from './scripts/card.js';
+import { clicklikeButton, createCard, deleteCard, likeButton } from './scripts/card.js';
 import { openModal, closeModal } from './scripts/modal.js';
 
 // @todo: Глобальные константы
@@ -23,12 +23,12 @@ const addButton = document.querySelector('.profile__add-button');
 const formElement = document.querySelector('.popup__form');
 
 // Находим поля формы личных данных
-const nameInput = formElement.querySelector('.popup__input_type_name');
-const jobInput = formElement.querySelector('.popup__input_type_description');
-
-// Находим input формы личных данных
 const elName = document.querySelector('.profile__title');
 const elJob = document.querySelector('.profile__description');
+
+// Находим input формы личных данных
+const nameInput = formElement.querySelector('.popup__input_type_name');
+const jobInput = formElement.querySelector('.popup__input_type_description');
 
 // Находим поля формы создания новой карточки
 const popupImage = popupTypeImage.querySelector('.popup__image');
@@ -60,10 +60,10 @@ function addInput() {
 document.forms['edit-profile'].addEventListener('submit', handleFormSubmit); 
 
 // Функция создания новой карточки
-function newCard(evt) {
+function createNewCard(evt) {
     evt.preventDefault();    
     const objCard = { name: cardName.value, link: url.value };
-    return addNewCard(createCard(objCard, deleteCard, openImage, likeButton));
+    return addNewCard(createCard(objCard, deleteCard, openImage, clicklikeButton));
 }
 // Функция добавления новой карточки
 function addNewCard(element) {
@@ -73,7 +73,7 @@ function addNewCard(element) {
 }
 
 // Слушатель на кнопку сохранения новой карточки
-document.forms['new-place'].addEventListener('submit', newCard);
+document.forms['new-place'].addEventListener('submit', createNewCard);
 
 // Открыть модальное окно кликом на картинку
 function openImage(element) {
@@ -101,6 +101,6 @@ closeButtons.forEach((button) => {
 
 // @todo: Вывод карточек на страницу
 initialCards.forEach((cardItem) => {
-    placesList.append(createCard(cardItem, deleteCard, openImage, likeButton));
+    placesList.append(createCard(cardItem, deleteCard, openImage, clicklikeButton));
   })
 
